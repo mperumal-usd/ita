@@ -17,7 +17,7 @@ async function speakApi(text,audioPlayerElement) {
 
     if (response.status === 401) {
       // Redirect to login page if not authenticated
-      window.location.href = "https://mperumal-usd.github.io/myLearnings/Login"; 
+      window.location.href = "https://mperumal-usd.github.io/ita/Login"; 
       return;
     }
 
@@ -55,7 +55,7 @@ async function getWorkSheet(number,topic){
   }});
    if (response.status === 401) {
     // Redirect to login page if not authenticated
-    window.location.href = "https://mperumal-usd.github.io/myLearnings/Login"; 
+    window.location.href = "https://mperumal-usd.github.io/ita/Login"; 
     return;
   }
    if (!response.ok){

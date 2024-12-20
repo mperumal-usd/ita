@@ -1,8 +1,7 @@
 ---
-category: Tools
-order: 6
+category: HSCP
+order: 2
 title: HSCP 1
-
 ---
 <script src="{{ site.baseurl }}/scripts/track.js"></script>
 <script src="{{ site.baseurl }}/scripts/speech.js"></script>

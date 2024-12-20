@@ -1,6 +1,6 @@
 ---
-category: Tools
-order: 7
+category: HSCP 3
+order: 1
 title: தமிழ் quiz
 ---
 <script src="{{ site.baseurl }}/scripts/track.js"></script>

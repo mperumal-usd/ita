@@ -1,5 +1,5 @@
 ---
-category: Tools
+category: HSCP 3
 order: 7
 title: தமிழ் உரைநடை
 ---

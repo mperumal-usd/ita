@@ -1,23 +1,7 @@
 ---
-title: Mani
-category: About Me
+title: ITA
+category: About ITA
 order: 1
 ---
 
-Exploring Machine Learning and Artificai Intelligence
-
- 
-  ```javascript 
-    function greet(name) { 
-      console.log('Hello, ' + name + '!'); 
-    } 
-    greet('World'); 
-  ```
-```json
-{
- "a" : "b"
-}
-```
-```python
-print("hello")
-```
+ITA ...
