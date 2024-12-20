@@ -1,9 +1,9 @@
 ---
-title: Hello
+title: உலக தமிழ் கல்விக்கழகம் 
 ---
 
-# Welcome to my learnings
+# உலக தமிழ் கல்விக்கழகம் 
 
-This is a collection of my learnings and experiences.
-I have tried to document my learnings in a structured way so that it can be useful for others.
+
+
 

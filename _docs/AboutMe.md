@@ -1,7 +1,7 @@
 ---
-title: ITA
-category: About ITA
+title: உலக தமிழ் கல்விக்கழகம் 
+category: About உலக தமிழ் கல்விக்கழகம் 
 order: 1
 ---
 
-ITA ...
+உலக தமிழ் கல்விக்கழகம்  ...
