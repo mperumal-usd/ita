@@ -1,23 +1,23 @@
 # ----
 # Site
 
-title: Learnings
-url: "https://mperumal-usd.github.io/myLearnings"
+title:உலக தமிழ்க்கல்விக்கழகம்
+url: "https://mperumal-usd.github.io/ita"
 baseurl:
 google_analytics_key:
 show_full_navigation: true
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 logo: /siteicon.png
-description: My Learnings
+description: 
 author:
   name:
   email:
   twitter: # twitter username without the @ symbol
 social:
-  name: Learnings
+  name: உலக தமிழ்க்கல்விக்கழகம்
   links:
-    - https://github.com/mperumal-usd/myLearnings
+    - https://github.com/mperumal-usd/ita
 
 # -----
 # Build
