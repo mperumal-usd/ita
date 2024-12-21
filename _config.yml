@@ -1,7 +1,7 @@
 # ----
 # Site
 
-title:உலகத் தமிழ்க்கல்விக் கழகம்
+title: "உலகத் தமிழ்க்கல்விக் கழகம்"
 url: "https://mperumal-usd.github.io/ita"
 baseurl:
 google_analytics_key:
@@ -9,13 +9,13 @@ show_full_navigation: true
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 logo: /siteicon.png
-description: 
+description:  "உலகத் தமிழ்க்கல்விக் கழகம்"
 author:
   name:
   email:
   twitter: # twitter username without the @ symbol
 social:
-  name: உலகத் தமிழ்க்கல்விக் கழகம்
+  name: "உலகத் தமிழ்க்கல்விக் கழகம்"
   links:
     - https://github.com/mperumal-usd/ita
 
