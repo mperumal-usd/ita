@@ -84,7 +84,7 @@ saveButton.addEventListener("click", (event) => {
             document.getElementById('passwordModal').style.display = 'none';
         })
         .catch(error => {
-            alert('Failed to save work.');
+            alert('Failed to save work.'+ JSON.stringify(error));
         });
 });
 
