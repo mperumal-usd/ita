@@ -3,13 +3,26 @@ let workSheet = {};
 let mediaRecorder;
 let audioChunks = [];
 let audioBlob;
+let base64AudioList=[];
 const saveButton = document.getElementById("conversation-saveButton");
 const clearButton = document.getElementById("conversation-clear-btn");
 
 clearButton.addEventListener('click',()=>{
     const userInput = document.getElementById('userInput');
-    userInput.value="";
+    userInput.innerHTML="";
+    audioChunks=[]
 });
+
+async function blobToString(blob) {
+    // Step 1: Convert Blob to ArrayBuffer
+    const arrayBuffer = await blob.arrayBuffer();
+
+    // Step 2: Convert ArrayBuffer to String using TextDecoder
+    const textDecoder = new TextDecoder(); // Default UTF-8 encoding
+    const string = textDecoder.decode(arrayBuffer);
+
+    return string;
+}
 
 async function getExercise() {
     const dropdown = document.getElementById("weeks");
@@ -82,6 +95,7 @@ saveButton.addEventListener("click", (event) => {
         .then(data => {
             alert('Work saved successfully!  ' + (data.id ? "id :" + data.id : ""));
             document.getElementById('passwordModal').style.display = 'none';
+            return;
         })
         .catch(error => {
             alert('Failed to save work.'+ JSON.stringify(error));
@@ -128,12 +142,13 @@ if (!('webkitSpeechRecognition' in window)) {
             mediaRecorder.ondataavailable = (event) => {
                 audioChunks.push(event.data);
             };
-            mediaRecorder.onstop = () => {
+            mediaRecorder.onstop = async () => {
                 audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 const audioURL = URL.createObjectURL(audioBlob);
                 console.log('Audio URL:', audioURL);
+                base64AudioList.append(blobToString(audioBlob));
                 // Clear chunks for the next recording
-                audioChunks = [];
+                 audioChunks = [];
             };
             mediaRecorder.start();
             console.log('Audio recording started');
