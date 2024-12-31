@@ -30,7 +30,7 @@ async function speakApi(text,audioPlayerElement,base64AudioList) {
     const audioBlob = await response.blob();
 
   
-    const arrayBuffer = await blob.arrayBuffer();
+    const arrayBuffer = await audioBlob.arrayBuffer();
 
     // Step 2: Convert ArrayBuffer to String using TextDecoder
     const textDecoder = new TextDecoder(); // Default UTF-8 encoding
