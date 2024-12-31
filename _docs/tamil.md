@@ -55,10 +55,6 @@ title: தமிழ் பேச்சு
                     audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                     const audioURL = URL.createObjectURL(audioBlob);
                     console.log('Audio URL:', audioURL);
-
-                    // Play or download the audio
-                    const audio = new Audio(audioURL);
-                    audio.play();
                     // Clear chunks for the next recording
                     audioChunks = [];
                 };
