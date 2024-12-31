@@ -32,6 +32,7 @@ title: தமிழ் பேச்சு
             || window.webkitSpeechRecognition;
 
         const recognition = new SpeechRecognition();
+        let mediaRecorder;
             recognition.lang = 'ta';
             // const recognition = new webkitSpeechRecognition(); // Create a new instance of SpeechRecognition
                 
@@ -46,12 +47,49 @@ title: தமிழ் பேச்சு
                 recognition.start(); // Start the speech recognition
                 startBtn.disabled = true;
                 stopBtn.disabled = false;
+                try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = (event) => {
+            audioChunks.push(event.data);
+        };
+
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            const audioURL = URL.createObjectURL(audioBlob);
+            console.log('Audio URL:', audioURL);
+
+            // Play or download the audio
+            const audio = new Audio(audioURL);
+            audio.play();
+
+            // Optional: Save the audio file
+            const downloadLink = document.createElement('a');
+            downloadLink.href = audioURL;
+            downloadLink.download = 'recorded-audio.wav';
+            downloadLink.click();
+
+            // Clear chunks for the next recording
+            audioChunks = [];
+        };
+
+        mediaRecorder.start();
+        console.log('Audio recording started');
+    } catch (error) {
+        console.error('Error accessing microphone:', error);
+    }
+
             });
 
             stopBtn.addEventListener('click', () => {
                 recognition.stop(); // Stop the speech recognition
                 startBtn.disabled = false;
                 stopBtn.disabled = true;
+                 if (mediaRecorder) {
+        mediaRecorder.stop();
+        console.log('Audio recording stopped');
+    }
             });
 
             recognition.onresult = (event) => {
