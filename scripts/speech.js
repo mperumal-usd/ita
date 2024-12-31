@@ -5,7 +5,7 @@ async function speak(){
   speakApi(text,audioPlayer)
 }
 
-async function speakApi(text,audioPlayerElement) {
+async function speakApi(text,audioPlayerElement,base64AudioList) {
   try {
     // Replace with your API URL that returns audio/mpeg
     const apiUrl ='https://infinite-sands-52519-06605f47cb30.herokuapp.com/text_to_speech?text='+text
@@ -29,12 +29,19 @@ async function speakApi(text,audioPlayerElement) {
     // Convert the response into a Blob (audio file)
     const audioBlob = await response.blob();
 
+  
+    const arrayBuffer = await blob.arrayBuffer();
+
+    // Step 2: Convert ArrayBuffer to String using TextDecoder
+    const textDecoder = new TextDecoder(); // Default UTF-8 encoding
+    const speechEncoded = textDecoder.decode(arrayBuffer);
+    base64AudioList.push(speechEncoded);
     // Create a URL for the Blob object and set it as the source for the audio player
     const audioUrl = URL.createObjectURL(audioBlob);
     audioPlayerElement.src = audioUrl;
 
     // Play the audio immediately after setting the source
-    audioPlayerElement.play();
+    await audioPlayerElement.play();
   } catch (error) {
     console.error('Error fetching audio:', error);
   }

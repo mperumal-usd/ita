@@ -36,6 +36,7 @@ async function getExercise() {
     topicSelected.textContent = workSheet.intro[1], audioPlayer
     // await speakApi(workSheet.intro[0],audioPlayer)
     await speakApi(workSheet.intro[1], audioPlayer)
+    base64AudioList=[];
     startBtn.disabled = false;
 }
 
@@ -52,13 +53,13 @@ async function sendMessage() {
         // Simulate receiving a response after a brief delay
         const audioPlayer = document.getElementById('audioPlayer');
         if (counter == 0) {
-            await speakApi(workSheet.intro[0], audioPlayer)
-            await speakApi(workSheet.intro[1], audioPlayer)
+            await speakApi(workSheet.intro[0], audioPlayer,base64AudioList)
+            await speakApi(workSheet.intro[1], audioPlayer,base64AudioList)
         }
         let botResponse = workSheet.conversations[counter];
         counter++;
         displayMessage(botResponse, 'received');
-        await speakApi(botResponse, audioPlayer)
+        await speakApi(botResponse, audioPlayer,base64AudioList)
         const startBtn = document.getElementById('conversation-start-btn');
         startBtn.disabled = false;
     }
@@ -79,7 +80,7 @@ saveButton.addEventListener("click", (event) => {
             'Content-Type': 'application/json',
             Authorization: sessionStorage.getItem('sessionToken')
         },
-        body: JSON.stringify({  "content": messageArray, 'work': "conversation","blob":audioBlob })
+        body: JSON.stringify({  "content": messageArray, 'work': "conversation","base64AudioList":base64AudioList })
     })
         .then(response => {
             if (response.status === 401) {
@@ -146,7 +147,7 @@ if (!('webkitSpeechRecognition' in window)) {
                 audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 const audioURL = URL.createObjectURL(audioBlob);
                 console.log('Audio URL:', audioURL);
-                base64AudioList.append(blobToString(audioBlob));
+                base64AudioList.push(blobToString(audioBlob));
                 // Clear chunks for the next recording
                  audioChunks = [];
             };
