@@ -35,7 +35,7 @@ title: தமிழ் பேச்சு
         const startBtn = document.getElementById('start-btn');
         const stopBtn = document.getElementById('stop-btn');
         const transcription = document.getElementById('transcription');
-        startBtn.addEventListener('click', () => {
+        startBtn.addEventListener('click',async () => {
             recognition.start(); // Start the speech recognition
             startBtn.disabled = true;
             stopBtn.disabled = false;
