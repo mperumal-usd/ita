@@ -20,103 +20,89 @@ title: தமிழ் பேச்சு
 <p id="transcription"></p>
 
 <script>
-        // Check if the browser supports the Web Speech API
-              tracker();
-              document.getElementById('playAudioBtn').addEventListener('click',speak);
-
-        if (!('webkitSpeechRecognition' in window)) {
+    // Check if the browser supports the Web Speech API
+    tracker();
+    document.getElementById('playAudioBtn').addEventListener('click',speak);
+    if (!('webkitSpeechRecognition' in window)) {
             alert('Sorry, your browser does not support speech recognition.');
-        } else {
-        
-        window.SpeechRecognition = window.SpeechRecognition
-            || window.webkitSpeechRecognition;
-
+    } else {
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recognition = new SpeechRecognition();
         let mediaRecorder;
-            recognition.lang = 'ta';
-            // const recognition = new webkitSpeechRecognition(); // Create a new instance of SpeechRecognition
-                
-            recognition.continuous = true; // Keep recognizing speech continuously
-            recognition.interimResults = true; // Show interim results
+        recognition.lang = 'ta';   
+        recognition.continuous = true; // Keep recognizing speech continuously
+        recognition.interimResults = true; // Show interim results
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const transcription = document.getElementById('transcription');
+        startBtn.addEventListener('click', () => {
+            recognition.start(); // Start the speech recognition
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    const audioURL = URL.createObjectURL(audioBlob);
+                    console.log('Audio URL:', audioURL);
 
-            const startBtn = document.getElementById('start-btn');
-            const stopBtn = document.getElementById('stop-btn');
-            const transcription = document.getElementById('transcription');
+                    // Play or download the audio
+                    const audio = new Audio(audioURL);
+                    audio.play();
 
-            startBtn.addEventListener('click', () => {
-                recognition.start(); // Start the speech recognition
-                startBtn.disabled = true;
-                stopBtn.disabled = false;
-                try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
+                    // Optional: Save the audio file
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = audioURL;
+                    downloadLink.download = 'recorded-audio.wav';
+                    downloadLink.click();
 
-        mediaRecorder.ondataavailable = (event) => {
-            audioChunks.push(event.data);
-        };
+                    // Clear chunks for the next recording
+                    audioChunks = [];
+                };
+                mediaRecorder.start();
+                console.log('Audio recording started');
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+            }
+        });
 
-        mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-            const audioURL = URL.createObjectURL(audioBlob);
-            console.log('Audio URL:', audioURL);
+        stopBtn.addEventListener('click', () => {
+            recognition.stop(); // Stop the speech recognition
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            if (mediaRecorder) {
+                mediaRecorder.stop();
+                console.log('Audio recording stopped');
+            }
+        });
 
-            // Play or download the audio
-            const audio = new Audio(audioURL);
-            audio.play();
-
-            // Optional: Save the audio file
-            const downloadLink = document.createElement('a');
-            downloadLink.href = audioURL;
-            downloadLink.download = 'recorded-audio.wav';
-            downloadLink.click();
-
-            // Clear chunks for the next recording
-            audioChunks = [];
-        };
-
-        mediaRecorder.start();
-        console.log('Audio recording started');
-    } catch (error) {
-        console.error('Error accessing microphone:', error);
-    }
-
-            });
-
-            stopBtn.addEventListener('click', () => {
-                recognition.stop(); // Stop the speech recognition
-                startBtn.disabled = false;
-                stopBtn.disabled = true;
-                 if (mediaRecorder) {
-        mediaRecorder.stop();
-        console.log('Audio recording stopped');
-    }
-            });
-
-            recognition.onresult = (event) => {
-                let interimTranscript = '';
-                let finalTranscript = '';
-
-                for (let i = 0; i < event.results.length; i++) {
-                    const transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    } else {
-                        interimTranscript += transcript;
-                    }
+        recognition.onresult = (event) => {
+            let interimTranscript = '';
+            let finalTranscript = '';
+            for (let i = 0; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript;
+                } else {
+                    interimTranscript += transcript;
                 }
+            }
+            transcription.innerHTML = `<strong>Final:</strong> ${finalTranscript}<br><strong>Interim:</strong> ${interimTranscript}`;
+        };
 
-                transcription.innerHTML = `<strong>Final:</strong> ${finalTranscript}<br><strong>Interim:</strong> ${interimTranscript}`;
-            };
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error detected: ' + event.error);
+        };
 
-            recognition.onerror = (event) => {
-                console.error('Speech recognition error detected: ' + event.error);
-            };
-
-            recognition.onend = () => {
-                startBtn.disabled = false;
-                stopBtn.disabled = true;
-            };
-        }
+        recognition.onend = () => {
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        };
+    }
 </script>
 
 ####பேச்சைப் பதிவுசெய்து பதிவிறக்கவும்
