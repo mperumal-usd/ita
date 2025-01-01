@@ -147,7 +147,7 @@ if (!('webkitSpeechRecognition' in window)) {
                 audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 const audioURL = URL.createObjectURL(audioBlob);
                 console.log('Audio URL:', audioURL);
-                base64AudioList.push(blobToString(audioBlob));
+                base64AudioList.push(await blobToString(audioBlob));
                 // Clear chunks for the next recording
                  audioChunks = [];
             };
