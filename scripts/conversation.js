@@ -3,7 +3,7 @@ let workSheet = {};
 let mediaRecorder;
 let audioChunks = [];
 let audioBlob;
-let base64AudioList=[];
+let audioBlobList=[];
 const saveButton = document.getElementById("conversation-saveButton");
 const clearButton = document.getElementById("conversation-clear-btn");
 
@@ -13,6 +13,32 @@ clearButton.addEventListener('click',()=>{
     audioChunks=[]
 });
 
+async function postAudioAndData(audioBlob, data, uploadUrl) {
+    // Create a FormData object
+    const formData = new FormData();
+
+    // Append the audio blob
+    formData.append('audio', audioBlob, 'audio.wav'); // 'audio.wav' is the filename
+
+    // Append additional data (e.g., JSON fields)
+    Object.keys(data).forEach(key => {
+        formData.append(key, data[key]);
+    });
+
+    // Use fetch to send the POST request
+    const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: formData,
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const result = await response.json(); // Adjust based on backend response format
+    console.log('Server Response:', result);
+}
+
 async function blobToString(blob) {
     // Step 1: Convert Blob to ArrayBuffer
     const arrayBuffer = await blob.arrayBuffer();
@@ -20,7 +46,6 @@ async function blobToString(blob) {
     // Step 2: Convert ArrayBuffer to String using TextDecoder
     const textDecoder = new TextDecoder(); // Default UTF-8 encoding
     const string = textDecoder.decode(arrayBuffer);
-
     return string;
 }
 
@@ -53,13 +78,13 @@ async function sendMessage() {
         // Simulate receiving a response after a brief delay
         const audioPlayer = document.getElementById('audioPlayer');
         if (counter == 0) {
-            await speakApi(workSheet.intro[0], audioPlayer,base64AudioList)
-            await speakApi(workSheet.intro[1], audioPlayer,base64AudioList)
+            await speakApi(workSheet.intro[0], audioPlayer)
+            await speakApi(workSheet.intro[1], audioPlayer)
         }
         let botResponse = workSheet.conversations[counter];
         counter++;
         displayMessage(botResponse, 'received');
-        await speakApi(botResponse, audioPlayer,base64AudioList)
+        await speakApi(botResponse, audioPlayer)
         const startBtn = document.getElementById('conversation-start-btn');
         startBtn.disabled = false;
     }
@@ -70,17 +95,24 @@ saveButton.addEventListener("click", (event) => {
 
     // Get all messages inside the chat box
     const messages = chatBox.querySelectorAll(".message");
+    const formData = new FormData();
+    audioBlobList.forEach((audioBlob, index) => {
+        const filename = `audio_${index + 1}.wav`; // Assign a unique filename for each blob
+        formData.append(`audioFiles[]`, audioBlob, filename); // Use array-style key
+    });
 
     // Optional: Store all message values in an array
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
-    console.log(messageArray);
-    fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_work', {
+    formData.append("content",messageArray);
+    formData.append("work",conversation);
+    // console.log(messageArray);
+    fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_form', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: sessionStorage.getItem('sessionToken')
         },
-        body: JSON.stringify({  "content": messageArray, 'work': "conversation","base64AudioList":base64AudioList })
+        body: formData
     })
         .then(response => {
             if (response.status === 401) {
@@ -147,9 +179,9 @@ if (!('webkitSpeechRecognition' in window)) {
                 audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 const audioURL = URL.createObjectURL(audioBlob);
                 console.log('Audio URL:', audioURL);
-                base64AudioList.push(await blobToString(audioBlob));
+                audioBlobList.push(audioBlob);
                 // Clear chunks for the next recording
-                 audioChunks = [];
+                audioChunks = [];
             };
             mediaRecorder.start();
             console.log('Audio recording started');
