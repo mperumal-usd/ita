@@ -109,8 +109,7 @@ saveButton.addEventListener("click", (event) => {
     fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_form', {
         method: 'POST',
         headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: sessionStorage.getItem('sessionToken')
+            'Authorization': sessionStorage.getItem('sessionToken')
         },
         body: formData
     })
