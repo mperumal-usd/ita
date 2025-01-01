@@ -104,7 +104,7 @@ saveButton.addEventListener("click", (event) => {
     // Optional: Store all message values in an array
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
     formData.append("content",messageArray);
-    formData.append("work",conversation);
+    formData.append("work","conversation");
     // console.log(messageArray);
     fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_form', {
         method: 'POST',
