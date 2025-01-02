@@ -13,32 +13,6 @@ clearButton.addEventListener('click',()=>{
     audioChunks=[]
 });
 
-async function postAudioAndData(audioBlob, data, uploadUrl) {
-    // Create a FormData object
-    const formData = new FormData();
-
-    // Append the audio blob
-    formData.append('audio', audioBlob, 'audio.wav'); // 'audio.wav' is the filename
-
-    // Append additional data (e.g., JSON fields)
-    Object.keys(data).forEach(key => {
-        formData.append(key, data[key]);
-    });
-
-    // Use fetch to send the POST request
-    const response = await fetch(uploadUrl, {
-        method: 'POST',
-        body: formData,
-    });
-
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const result = await response.json(); // Adjust based on backend response format
-    console.log('Server Response:', result);
-}
-
 async function blobToString(blob) {
     // Step 1: Convert Blob to ArrayBuffer
     const arrayBuffer = await blob.arrayBuffer();
@@ -78,7 +52,7 @@ async function sendMessage() {
         // Simulate receiving a response after a brief delay
         const audioPlayer = document.getElementById('audioPlayer');
         if (counter == 0) {
-            await speakApi(workSheet.intro[0], audioPlayer)
+            // await speakApi(workSheet.intro[0], audioPlayer)
             await speakApi(workSheet.intro[1], audioPlayer)
         }
         let botResponse = workSheet.conversations[counter];
@@ -90,16 +64,20 @@ async function sendMessage() {
     }
 }
 
-saveButton.addEventListener("click", (event) => {
+saveButton.addEventListener("click",async (event) => {
     const chatBox = document.getElementById("chatBox");
 
     // Get all messages inside the chat box
     const messages = chatBox.querySelectorAll(".message");
     const formData = new FormData();
-    audioBlobList.forEach((audioBlob, index) => {
-        const filename = `audio_${index + 1}.wav`; // Assign a unique filename for each blob
-        formData.append(`audioFiles[]`, audioBlob, filename); // Use array-style key
-    });
+    audioBlob = new Blob(audioBlobList, { type: 'audio/wav' });
+    const filename = `audio.wav`;
+
+    formData.append(`audioFiles[]`,await blobToString(audioBlob), filename);
+    // audioBlobList.forEach((audioBlob, index) => {
+    //     const filename = `audio_${index + 1}.wav`; // Assign a unique filename for each blob
+    //     formData.append(`audioFiles[]`, audioBlob, filename); // Use array-style key
+    // });
 
     // Optional: Store all message values in an array
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
@@ -176,7 +154,7 @@ if (!('webkitSpeechRecognition' in window)) {
                 audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 const audioURL = URL.createObjectURL(audioBlob);
                 console.log('Audio URL:', audioURL);
-                audioBlobList.push(audioBlob);
+                audioBlobList.concat(audioChunks);
                 // Clear chunks for the next recording
                 audioChunks = [];
             };
