@@ -1,7 +1,7 @@
 ---
-category: HSCP
+category: HSCP 1
 order: 2
-title: HSCP 1
+title: Conversation Home Work
 ---
 <script src="{{ site.baseurl }}/scripts/track.js"></script>
 <script src="{{ site.baseurl }}/scripts/speech.js"></script>
@@ -34,12 +34,5 @@ title: HSCP 1
 <script>
 tracker();
 </script>
-
-<!-- ####பேச்ton">பதிவைத் தொடங்கவும்</button>
-<button id="speechStopButton" disabled>பதிவு செய்வதை நிறுத்து</button>
-<a id="speechDownloadLink" style="display:none;">பதிவிறக்கவும்</a>சைப் பதிவுசெய்து பதிவிறக்கவும்
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
-<button id="speechStartBut -->
 <div id="tracker"></div>
-<!-- <script src="{{ site.baseurl }}/scripts/recorder.js"></script> -->
 
