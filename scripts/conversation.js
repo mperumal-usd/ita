@@ -73,7 +73,10 @@ saveButton.addEventListener("click",async (event) => {
     audioBlob = new Blob(audioBlobList, { type: 'audio/wav' });
     const filename = `audio.wav`;
 
-    formData.append(`audioFiles[]`,await blobToString(audioBlob), filename);
+    formData.append(`audioFiles[]`,audioBlob, filename);
+    const audioURL = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioURL);
+    audio.play()
     // audioBlobList.forEach((audioBlob, index) => {
     //     const filename = `audio_${index + 1}.wav`; // Assign a unique filename for each blob
     //     formData.append(`audioFiles[]`, audioBlob, filename); // Use array-style key
