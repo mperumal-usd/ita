@@ -7,11 +7,6 @@ let audioBlobList=[];
 const saveButton = document.getElementById("conversation-saveButton");
 const clearButton = document.getElementById("conversation-clear-btn");
 
-clearButton.addEventListener('click',()=>{
-    const userInput = document.getElementById('userInput');
-    userInput.innerHTML="";
-    audioChunks=[]
-});
 
 async function getExercise() {
     const dropdown = document.getElementById("weeks");
@@ -129,6 +124,19 @@ if (!('webkitSpeechRecognition' in window)) {
     const stopBtn = document.getElementById('conversation-stop-btn');
     const transcription = document.getElementById('userInput');
 
+
+    clearButton.addEventListener('click',()=>{
+        const userInput = document.getElementById('userInput');
+        userInput.innerHTML="";
+        audioChunks=[]
+        mediaRecorder.start();
+        console.log('Audio recording started');
+        recognition.start(); // Start the speech recognition
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+    });
+    
+
     startBtn.addEventListener('click', async () => {
         let botResponse = workSheet.conversations[counter];
         counter++;
@@ -137,6 +145,7 @@ if (!('webkitSpeechRecognition' in window)) {
         recognition.start(); // Start the speech recognition
         startBtn.disabled = true;
         stopBtn.disabled = false;
+        startBtn.textContent='next';
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
