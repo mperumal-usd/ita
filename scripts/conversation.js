@@ -126,8 +126,6 @@ saveButton.addEventListener("click", (event) => {
         })
         .then(data => {
             alert('Work saved successfully!  ' + (data.id ? "id :" + data.id : ""));
-            document.getElementById('passwordModal').style.display = 'none';
-            return;
         })
         .catch(error => {
             alert('Failed to save work.'+ JSON.stringify(error));
