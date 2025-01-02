@@ -4,7 +4,7 @@ order: 5
 title: தமிழ் பேச்சு
 
 ---
-<script src="{{ site.baseurl }}/scripts/track.js"></script>
+<script src="{{ site.baseurl }}/scripts/track.js">tracker();</script>
 
 <h1>உரை ->  பேச்சு</h1>
 <textarea id="text-to-speak" rows="10" cols="50" placeholder="இது ஒரு தமிழ் உரைநடை மாற்றி. உதாரணம்: நான் இன்னைக்கு தமிழ் ஸ்கூலுக்கு போனேன். உங்கள் உரையை இங்கு பதிவு செய்யவும்..  neengal ipppadiuym tamizhai type seiyalaam  "></textarea><br>
@@ -23,7 +23,6 @@ title: தமிழ் பேச்சு
 
 <script>
     // Check if the browser supports the Web Speech API
-    tracker();
     document.getElementById('playAudioBtn').addEventListener('click',speak);
     if (!('webkitSpeechRecognition' in window)) {
             alert('Sorry, your browser does not support speech recognition.');

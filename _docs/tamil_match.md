@@ -3,7 +3,7 @@ category: HSCP 3
 order: 7
 title: தமிழ் உரைநடை
 ---
-<script src="{{ site.baseurl }}/scripts/track.js"></script>
+<script src="{{ site.baseurl }}/scripts/track.js">tracker();</script>
 <h2>Fill in the Blanks - Drag and Drop Exercise</h2>
 
 <p>Drag the correct answers to the blanks:</p>

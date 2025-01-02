@@ -3,7 +3,9 @@ category: HSCP 3
 order: 1
 title: தமிழ் quiz
 ---
-<script src="{{ site.baseurl }}/scripts/track.js"></script>
+<script src="{{ site.baseurl }}/scripts/track.js">
+    tracker();
+</script>
 <h1>Tamil-English Quiz</h1>
 <button class="quiz start-button" id="quiz-start" onclick="start(this)">start</button>
 <div class="question-box">
