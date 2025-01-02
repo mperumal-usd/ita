@@ -13,16 +13,6 @@ clearButton.addEventListener('click',()=>{
     audioChunks=[]
 });
 
-async function blobToString(blob) {
-    // Step 1: Convert Blob to ArrayBuffer
-    const arrayBuffer = await blob.arrayBuffer();
-
-    // Step 2: Convert ArrayBuffer to String using TextDecoder
-    const textDecoder = new TextDecoder(); // Default UTF-8 encoding
-    const string = textDecoder.decode(arrayBuffer);
-    return string;
-}
-
 async function getExercise() {
     const dropdown = document.getElementById("weeks");
     const selectedValue = dropdown.value; // Get the value of the selected option
@@ -55,10 +45,10 @@ async function sendMessage() {
             // await speakApi(workSheet.intro[0], audioPlayer)
             await speakApi(workSheet.intro[1], audioPlayer)
         }
-        let botResponse = workSheet.conversations[counter];
-        counter++;
-        displayMessage(botResponse, 'received');
-        await speakApi(botResponse, audioPlayer)
+        // let botResponse = workSheet.conversations[counter];
+        // counter++;
+        // displayMessage(botResponse, 'received');
+        // await speakApi(botResponse, audioPlayer)
         const startBtn = document.getElementById('conversation-start-btn');
         startBtn.disabled = false;
     }
@@ -75,16 +65,11 @@ saveButton.addEventListener("click",async (event) => {
 
     formData.append(`audioFiles[]`,audioBlob, filename);
     const audioURL = URL.createObjectURL(audioBlob);
-    const audio = new Audio(audioURL);
-    audio.play()
-    // audioBlobList.forEach((audioBlob, index) => {
-    //     const filename = `audio_${index + 1}.wav`; // Assign a unique filename for each blob
-    //     formData.append(`audioFiles[]`, audioBlob, filename); // Use array-style key
-    // });
-
+    // const audio = new Audio(audioURL);
+    // audio.play()
     // Optional: Store all message values in an array
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
-    formData.append("content",messageArray);
+    formData.append("content",JSON.stringify(messageArray));
     formData.append("work","conversation");
     // console.log(messageArray);
     fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_form', {
@@ -143,7 +128,12 @@ if (!('webkitSpeechRecognition' in window)) {
     const startBtn = document.getElementById('conversation-start-btn');
     const stopBtn = document.getElementById('conversation-stop-btn');
     const transcription = document.getElementById('userInput');
+
     startBtn.addEventListener('click', async () => {
+        let botResponse = workSheet.conversations[counter];
+        counter++;
+        displayMessage(botResponse, 'received');
+        await speakApi(botResponse, audioPlayer)
         recognition.start(); // Start the speech recognition
         startBtn.disabled = true;
         stopBtn.disabled = false;
