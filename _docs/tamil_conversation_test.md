@@ -11,7 +11,7 @@ title: Conversation Home Work Test
 <button id="conversation-saveButton">Finish Conversation</button>
 <script>
 tracker();
- const fileInput = document.getElementById('fileInput');
+const fileInput = document.getElementById('fileInput');
 const audioPlayer = document.getElementById('audioPlayer');
 const audioBlobList=[];
 fileInput.addEventListener('change', function(event) {
@@ -30,7 +30,7 @@ saveButton.addEventListener("click",async function(event) {
     const filename = `audio.wav`;
     formData.append(`audioFiles[]`,audioBlobList[0], filename);
     const messageArray = "test";
-    textContent.trim());
+    textContent.trim();
     formData.append("content",JSON.stringify(messageArray));
     formData.append("work","conversation");
     fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_form', {
