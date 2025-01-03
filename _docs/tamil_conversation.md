@@ -28,7 +28,7 @@ title: Conversation Home Work
         <audio id="audioPlayer" controls></audio>
     </div>
   </div>
-<button id="conversation-saveButton">Finish Conversation</button>
+<button id="conversation-saveButton" disabled>Finish Conversation</button>
 <script src="{{ site.baseurl }}/scripts/conversation.js"></script>
 <script>
 tracker();

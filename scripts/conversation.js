@@ -18,7 +18,7 @@ async function getExercise() {
     const audioPlayer = document.getElementById('audioPlayer');
     const topicSelected = document.getElementById('topicSelected');
     topicSelected.textContent = workSheet.intro[1], audioPlayer
-    // await speakApi(workSheet.intro[0],audioPlayer)
+    await speakApi(workSheet.intro[0],audioPlayer)
     await speakApi(workSheet.intro[1], audioPlayer)
     base64AudioList=[];
     startBtn.disabled = false;
@@ -46,6 +46,11 @@ async function sendMessage() {
         // await speakApi(botResponse, audioPlayer)
         const startBtn = document.getElementById('conversation-start-btn');
         startBtn.disabled = false;
+    }
+    if (workSheet && workSheet.conversations && workSheet.conversations.length <= counter ){
+        startBtn.disabled = true;
+        clearButton.disabled = true;
+        saveButton.disabled =false;
     }
 }
 
