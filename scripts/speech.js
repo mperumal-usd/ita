@@ -5,6 +5,26 @@ async function speak(){
   speakApi(text,audioPlayer)
 }
 
+function playAudio(blob) {
+  return new Promise((resolve, reject) => {
+    const audio = new Audio(URL.createObjectURL(blob));
+    audio.play()
+      .then(() => {
+        console.log('Playing audio blob');
+      })
+      .catch((error) => {
+        console.error('Error playing audio blob:', error);
+        reject(error); // Stop the sequence on failure
+      });
+
+    // Resolve the promise when the audio ends
+    audio.addEventListener('ended', () => {
+      console.log('Audio blob finished');
+      resolve();
+    });
+  });
+}
+
 async function speakApi(text,audioPlayerElement) {
   try {
     // Replace with your API URL that returns audio/mpeg
@@ -37,11 +57,11 @@ async function speakApi(text,audioPlayerElement) {
     // const speechEncoded = textDecoder.decode(arrayBuffer);
     // base64AudioList.push(speechEncoded);
     // Create a URL for the Blob object and set it as the source for the audio player
-    const audioUrl = URL.createObjectURL(audioBlob);
-    audioPlayerElement.src = audioUrl;
+    // const audioUrl = URL.createObjectURL(audioBlob);
+    // audioPlayerElement.src = audioUrl;
 
     // Play the audio immediately after setting the source
-    await audioPlayerElement.play();
+    await playAudio(audioBlob)
   } catch (error) {
     console.error('Error fetching audio:', error);
   }
