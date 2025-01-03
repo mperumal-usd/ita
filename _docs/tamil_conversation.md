@@ -20,16 +20,15 @@ title: Conversation Home Work
   <div class="chat-container">
     <div class="chat-box" id="chatBox">
     </div>
+    <div><p type="text" id="userInput"></p> </div>
     <div class="input-area">
-        <p type="text" id="userInput"></p>
-        <br>
         <button id="conversation-start-btn" disabled>start</button>
         <button id="conversation-clear-btn" >clear</button>
         <button id="conversation-stop-btn" onclick="sendMessage()" disabled>send</button>
         <audio id="audioPlayer" controls></audio>
     </div>
   </div>
-<button id="conversation-saveButton">Save</button>
+<button id="conversation-saveButton">Finish Conversation</button>
 <script src="{{ site.baseurl }}/scripts/conversation.js"></script>
 <script>
 tracker();

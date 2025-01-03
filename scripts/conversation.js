@@ -37,7 +37,7 @@ async function sendMessage() {
         // Simulate receiving a response after a brief delay
         const audioPlayer = document.getElementById('audioPlayer');
         if (counter == 0) {
-            // await speakApi(workSheet.intro[0], audioPlayer)
+            await speakApi(workSheet.intro[0], audioPlayer)
             await speakApi(workSheet.intro[1], audioPlayer)
         }
         // let botResponse = workSheet.conversations[counter];
@@ -128,6 +128,7 @@ if (!('webkitSpeechRecognition' in window)) {
     clearButton.addEventListener('click',()=>{
         const userInput = document.getElementById('userInput');
         userInput.innerHTML="";
+        transcription.innerHTML=""
         audioChunks=[]
         mediaRecorder.start();
         console.log('Audio recording started');
@@ -187,6 +188,7 @@ if (!('webkitSpeechRecognition' in window)) {
             }
         }
         transcription.innerHTML = `${finalTranscript}`;
+        event.results=[]
     };
     recognition.onerror = (event) => {
         console.error('Speech recognition error detected: ' + event.error);
