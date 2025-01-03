@@ -6,7 +6,8 @@ let audioBlob;
 let audioBlobList=[];
 const saveButton = document.getElementById("conversation-saveButton");
 const clearButton = document.getElementById("conversation-clear-btn");
-
+const startBtn = document.getElementById('conversation-start-btn');
+const stopBtn = document.getElementById('conversation-stop-btn');
 
 async function getExercise() {
     const dropdown = document.getElementById("weeks");
@@ -125,8 +126,7 @@ if (!('webkitSpeechRecognition' in window)) {
     recognition.lang = 'ta';
     recognition.continuous = true; // Keep recognizing speech continuously
     recognition.interimResults = true; // Show interim results
-    const startBtn = document.getElementById('conversation-start-btn');
-    const stopBtn = document.getElementById('conversation-stop-btn');
+
     const transcription = document.getElementById('userInput');
 
 

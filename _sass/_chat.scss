@@ -76,67 +76,14 @@
     opacity: 0.6; /* Slightly transparent */
   }
 
+  #conversation-saveButton:disabled {
+    background-color: #cccccc; /* Grey background */
+    color: #666666; /* Dimmed text color */
+    cursor: not-allowed; /* Show 'not allowed' cursor */
+    opacity: 0.6; /* Slightly transparent */
+  }
+
   .input-area button:hover {
     background-color: #45a049;
   }
 
-#weeks {
-    width: 200px;
-    padding: 10px;
-    font-size: 16px;
-    color: #333;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Add custom hover effect */
-#weeks:hover {
-    background-color: #e0e0e0;
-    border-color: #888;
-}
-
-/* Custom focus style */
-#weeks:focus {
-    outline: none;
-    border-color: #007BFF;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-#passwordModal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  background: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  z-index: 1000;
-}
-
-#passwordModal input {
-  padding: 10px;
-  margin: 10px 0;
-  width: 100%;
-}
-
-#passwordModal button {
-  padding: 10px;
-  margin: 5px;
-  cursor: pointer;
-}
-
-/* Overlay for modal background */
-#overlay {
-  display: none; /* Hidden by default */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
