@@ -25,7 +25,7 @@ fileInput.addEventListener('change', function(event) {
             }
   });
 const saveButton = document.getElementById("conversation-saveButton");
-saveButton.addEventListener("click",async (event) => {
+saveButton.addEventListener("click",async function(event) {
     const formData = new FormData();
     const filename = `audio.wav`;
     formData.append(`audioFiles[]`,audioBlobList[0], filename);
@@ -33,7 +33,6 @@ saveButton.addEventListener("click",async (event) => {
     textContent.trim());
     formData.append("content",JSON.stringify(messageArray));
     formData.append("work","conversation");
-    // console.log(messageArray);
     fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_form', {
         method: 'POST',
         headers: {
@@ -41,7 +40,7 @@ saveButton.addEventListener("click",async (event) => {
         },
         body: formData
     })
-        .then(response => {
+    .then(response => {
             if (response.status === 401) {
                 // Handle 401 Unauthorized - user is not authenticated
                 console.log('Unauthorized! Redirecting to login...');
@@ -51,13 +50,13 @@ saveButton.addEventListener("click",async (event) => {
             }
             // If the status is OK or other success code, handle it
             return response.json();  // Parse the JSON response
-        })
-        .then(data => {
+    })
+    .then(data => {
             alert('Work saved successfully!  ' + (data.id ? "id :" + data.id : ""));
         })
-        .catch(error => {
+    .catch(error => {
             alert('Failed to save work.'+ JSON.stringify(error));
-        });
+    });
 });
 </script>
 <div id="tracker"></div>
