@@ -22,9 +22,9 @@ title: Conversation Home Work
     </div>
     <div><p type="text" id="userInput"></p> </div>
     <div class="input-area">
-        <button id="conversation-start-btn" disabled>start</button>
+        <button id="conversation-start-btn" disabled>record</button>
         <button id="conversation-clear-btn" >clear</button>
-        <button id="conversation-stop-btn" onclick="sendMessage()" disabled>send</button>
+        <button id="conversation-send-btn" onclick="sendMessage()" disabled>send</button>
         <audio id="audioPlayer" controls></audio>
     </div>
   </div>

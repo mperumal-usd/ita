@@ -87,3 +87,25 @@
     background-color: #45a049;
   }
 
+#weeks {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Add custom hover effect */
+#weeks:hover {
+    background-color: #e0e0e0;
+    border-color: #888;
+}
+
+/* Custom focus style */
+#weeks:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

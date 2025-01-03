@@ -7,7 +7,8 @@ let audioBlobList=[];
 const saveButton = document.getElementById("conversation-saveButton");
 const clearButton = document.getElementById("conversation-clear-btn");
 const startBtn = document.getElementById('conversation-start-btn');
-const stopBtn = document.getElementById('conversation-stop-btn');
+const sendBtn = document.getElementById('conversation-send-btn');
+const transcription = document.getElementById('userInput');
 
 async function getExercise() {
     const dropdown = document.getElementById("weeks");
@@ -16,13 +17,13 @@ async function getExercise() {
     const header = await getWorkSheet(null, "header")
     workSheet = await getWorkSheet(selectedText === "" ? "1" : selectedText, null);
     const startBtn = document.getElementById('conversation-start-btn');
-    const audioPlayer = document.getElementById('audioPlayer');
     const topicSelected = document.getElementById('topicSelected');
-    topicSelected.textContent = workSheet.intro[1], audioPlayer
-    await speakApi(workSheet.intro[0],audioPlayer)
-    await speakApi(workSheet.intro[1], audioPlayer)
+    topicSelected.textContent = workSheet.intro[1]
+    await speakApi(workSheet.intro[0])
+    await speakApi(workSheet.intro[1])
     base64AudioList=[];
     startBtn.disabled = false;
+    sendMessage();
 }
 
 async function sendMessage() {
@@ -32,21 +33,14 @@ async function sendMessage() {
         // Display the sent message
         if (message) {
             displayMessage(message, 'sent');
+             // Clear input field
+            userInput.textContent = "";
         }
-        // Clear input field
-        userInput.textContent = "";
-        // Simulate receiving a response after a brief delay
-        const audioPlayer = document.getElementById('audioPlayer');
-        if (counter == 0) {
-            await speakApi(workSheet.intro[0], audioPlayer)
-            await speakApi(workSheet.intro[1], audioPlayer)
-        }
-        // let botResponse = workSheet.conversations[counter];
-        // counter++;
-        // displayMessage(botResponse, 'received');
-        // await speakApi(botResponse, audioPlayer)
-        const startBtn = document.getElementById('conversation-start-btn');
         startBtn.disabled = false;
+        let botResponse = workSheet.conversations[counter];
+        counter++;
+        displayMessage(botResponse, 'received');
+        await speakApi(botResponse)
     }
     if (workSheet && workSheet.conversations && workSheet.conversations.length <= counter ){
         startBtn.disabled = true;
@@ -63,12 +57,7 @@ saveButton.addEventListener("click",async (event) => {
     const formData = new FormData();
     audioBlob = new Blob(audioBlobList, { type: 'audio/wav' });
     const filename = `audio.wav`;
-
     formData.append(`audioFiles[]`,audioBlob, filename);
-    const audioURL = URL.createObjectURL(audioBlob);
-    // const audio = new Audio(audioURL);
-    // audio.play()
-    // Optional: Store all message values in an array
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
     formData.append("content",JSON.stringify(messageArray));
     formData.append("work","conversation");
@@ -127,9 +116,6 @@ if (!('webkitSpeechRecognition' in window)) {
     recognition.continuous = true; // Keep recognizing speech continuously
     recognition.interimResults = true; // Show interim results
 
-    const transcription = document.getElementById('userInput');
-
-
     clearButton.addEventListener('click',()=>{
         const userInput = document.getElementById('userInput');
         userInput.innerHTML="";
@@ -139,19 +125,15 @@ if (!('webkitSpeechRecognition' in window)) {
         console.log('Audio recording started');
         recognition.start(); // Start the speech recognition
         startBtn.disabled = true;
-        stopBtn.disabled = false;
+        sendBtn.disabled = false;
     });
     
 
     startBtn.addEventListener('click', async () => {
-        let botResponse = workSheet.conversations[counter];
-        counter++;
-        displayMessage(botResponse, 'received');
-        await speakApi(botResponse, audioPlayer)
         recognition.start(); // Start the speech recognition
         startBtn.disabled = true;
-        stopBtn.disabled = false;
-        startBtn.textContent='next';
+        sendBtn.disabled = false;
+        startBtn.textContent='listening';
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
@@ -172,14 +154,15 @@ if (!('webkitSpeechRecognition' in window)) {
             console.error('Error accessing microphone:', error);
         }
     });
-    stopBtn.addEventListener('click', () => {
+    sendBtn.addEventListener('click', () => {
         recognition.stop(); // Stop the speech recognition
         startBtn.disabled = false;
-        stopBtn.disabled = true;
+        sendBtn.disabled = true;
         if (mediaRecorder) {
             mediaRecorder.stop();
             console.log('Audio recording stopped');
         }
+        startBtn.textContent='record';
     });
     recognition.onresult = (event) => {
         let interimTranscript = '';
@@ -199,7 +182,6 @@ if (!('webkitSpeechRecognition' in window)) {
         console.error('Speech recognition error detected: ' + event.error);
     };
     recognition.onend = () => {
-        // startBtn.disabled = false;
-        // stopBtn.disabled = true;
+        console.log("Recognition on end")
     };
 }
