@@ -23,7 +23,8 @@ function validateAndSubmit() {
         fetch(url, {
             method: 'POST', // POST method
             headers: {
-                'Content-Type': 'application/json' // Indicating the content type
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('sessionToken')
             },
             body: JSON.stringify(data)
         })
