@@ -1,7 +1,7 @@
 ---
-category: HSCP 1
-order: 3
-title: Conversation Home Work Test
+# category: HSCP 1
+# order: 3
+# title: Conversation Home Work Test
 ---
 <script src="{{ site.baseurl }}/scripts/track.js"></script>
 <h1>Upload and Play a WAV File</h1>
