@@ -16,4 +16,26 @@ order: 1
         </form>
         <a href="#" class="login-forgot-password">Forgot your password?</a>
 </div>
+
+<div class="login-modal" id="changePasswordModal">
+        <div class="login-modal-content">
+            <h2>Change Your Password</h2>
+            <form id="changePasswordForm">
+                <div class="login-form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="login-form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="login-form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div id="errorMessage" class="login-error"></div>
+                <button type="button" onclick="validateAndSubmit()">Submit</button>
+            </form>
+        </div>
+    </div>
 <script src="{{ site.baseurl }}/scripts/login.js"></script>

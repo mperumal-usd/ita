@@ -1,5 +1,43 @@
 
+function changePassword(){
+    const loginForm = document.getElementById('login-form');
+    const changePasswordModal = document.getElementById('changePasswordModal');
+
+    // Simulate first login check
+    const isFirstLogin = true;
+
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent form submission
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        // Simulate login validation
+        if (username === "test" && password === "password" && isFirstLogin) {
+            alert('Login successful!');
+            changePasswordModal.style.display = 'flex'; // Show password change modal
+        } else {
+            alert('Invalid login or not the first login.');
+        }
+    });
+
+    function validateAndSubmit() {
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const errorMessage = document.getElementById('errorMessage');
+
+        if (newPassword !== confirmPassword) {
+            errorMessage.textContent = "Passwords do not match!";
+            return;
+        }
+
+        alert('Password changed successfully!');
+        changePasswordModal.style.display = 'none'; // Hide modal
+    }
+}
+
+
 function login(){
+
 const form = document.getElementById('login-form');
         // Add an event listener for form submission
 form.addEventListener('submit', function(event) {
@@ -43,5 +81,7 @@ form.addEventListener('submit', function(event) {
             });
         });
 }
+
+
 login()
     
