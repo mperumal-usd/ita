@@ -46,7 +46,6 @@ function validateAndSubmit() {
         });
 }
 
-
 function showModal() {
     document.getElementById('changePasswordModal').style.display = 'block';
 }
