@@ -116,22 +116,24 @@ if (!('webkitSpeechRecognition' in window)) {
     recognition.continuous = true; // Keep recognizing speech continuously
     recognition.interimResults = true; // Show interim results
 
-    clearButton.addEventListener('click',()=>{
+    clearButton.addEventListener('click',async ()=>{
         const userInput = document.getElementById('userInput');
         userInput.innerHTML="";
         transcription.innerHTML=""
         audioChunks=[]
         if(mediaRecorder){
-            mediaRecorder.stop();
+            await mediaRecorder.stop();
+            await mediaRecorder.start();
         }
         if(recognition){
-            recognition.stop();
+            await recognition.stop();
+            await recognition.start(); 
         }
-        mediaRecorder.start();
         console.log('Audio recording started');
-        recognition.start(); // Start the speech recognition
+       // Start the speech recognition
         startBtn.disabled = true;
         sendBtn.disabled = false;
+        startBtn.textContent='listening';
     });
     
 
