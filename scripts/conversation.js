@@ -12,6 +12,7 @@ const transcription = document.getElementById('userInput');
 const progressBar = document.getElementById('progressBar');
 const progressText = document.getElementById('progressText');
 
+
 async function getExercise() {
     const dropdown = document.getElementById("weeks");
     const selectedValue = dropdown.value; // Get the value of the selected option
@@ -58,6 +59,8 @@ async function sendMessage() {
 // Create a ReadableStream to track progress
 function getUploadStream(audioBlob){
 const stream = audioBlob.stream().getReader();
+const totalSize = audioBlob.size;
+let uploadedSize = 0;
 const uploadStream = new ReadableStream({
     start(controller) {
         function push() {
