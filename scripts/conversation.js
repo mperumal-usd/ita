@@ -85,13 +85,13 @@ saveButton.addEventListener("click",async (event) => {
     const chatBox = document.getElementById("chatBox");
     saveButton.textContent='Uploading...';
     // Show progress bar
-   progressContainer.style.display = 'flex';
+    progressContainer.style.display = 'flex';
     // Get all messages inside the chat box
     const messages = chatBox.querySelectorAll(".message");
     const formData = new FormData();
     audioBlob = new Blob(audioBlobList, { type: 'audio/wav' });
     const filename = `audio.wav`;
-    formData.append(`audioFiles[]`,new Blob([await new Response(uploadStream).blob()], { type: audioBlob.type }), filename);
+    formData.append(`audioFiles[]`,new Blob([await new Response(getUploadStream(audioBlob)).blob()], { type: audioBlob.type }), filename);
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
     formData.append("content",JSON.stringify(messageArray));
     formData.append("work","conversation");
