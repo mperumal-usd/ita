@@ -9,6 +9,8 @@ const clearButton = document.getElementById("conversation-clear-btn");
 const startBtn = document.getElementById('conversation-start-btn');
 const sendBtn = document.getElementById('conversation-send-btn');
 const transcription = document.getElementById('userInput');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
 
 async function getExercise() {
     const dropdown = document.getElementById("weeks");
@@ -49,15 +51,47 @@ async function sendMessage() {
     }
 }
 
+
+
+
+
+// Create a ReadableStream to track progress
+function getUploadStream(audioBlob){
+const stream = audioBlob.stream().getReader();
+const uploadStream = new ReadableStream({
+    start(controller) {
+        function push() {
+            stream.read().then(({ done, value }) => {
+                if (done) {
+                    controller.close();
+                    return;
+                }
+                uploadedSize += value.length;
+                const percentComplete = Math.round((uploadedSize / totalSize) * 100);
+                progressBar.value = percentComplete;
+                progressText.textContent = `${percentComplete}%`;
+                controller.enqueue(value);
+                push();
+            });
+        }
+        push();
+    }
+});
+return uploadStream;
+}
+
+
 saveButton.addEventListener("click",async (event) => {
     const chatBox = document.getElementById("chatBox");
-
+    saveButton.textContent='Uploading...';
+    // Show progress bar
+   progressContainer.style.display = 'flex';
     // Get all messages inside the chat box
     const messages = chatBox.querySelectorAll(".message");
     const formData = new FormData();
     audioBlob = new Blob(audioBlobList, { type: 'audio/wav' });
     const filename = `audio.wav`;
-    formData.append(`audioFiles[]`,audioBlob, filename);
+    formData.append(`audioFiles[]`,new Blob([await new Response(uploadStream).blob()], { type: audioBlob.type }), filename);
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
     formData.append("content",JSON.stringify(messageArray));
     formData.append("work","conversation");
@@ -76,16 +110,24 @@ saveButton.addEventListener("click",async (event) => {
                 // Redirect to login page (or handle error accordingly)
                 window.location.href = "https://mperumal-usd.github.io/ita/Login"; // Redirect to login page
                 return; // Stop further execution if 401 is encountered
+            }else if (response.ok){
+            progressBar.value = 0;
+            progressText.textContent = '0%';
             }
             // If the status is OK or other success code, handle it
             return response.json();  // Parse the JSON response
         })
         .then(data => {
             alert('Work saved successfully!  ' + (data.id ? "id :" + data.id : ""));
+            saveButton.textContent='Uploaded';
+            saveButton.disabled=true;
         })
         .catch(error => {
             alert('Failed to save work.'+ JSON.stringify(error));
-        });
+        })
+        .finally( ()=>{
+            progressContainer.style.display = 'none';
+        })
 });
 
 
