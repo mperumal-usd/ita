@@ -46,7 +46,7 @@
             </li>
         </ul>
 
-        <ul>
+        <ul id="activityGroups">
             {% assign grouped = site.docs | group_by: 'category' %}
             {% for group in grouped %}
             <li class="nav-item top-level {% if group.name == page.category %}current{% endif %}">
@@ -101,6 +101,23 @@
   document.addEventListener('DOMContentLoaded', (event) => {
     Prism.highlightAll();
   });
+  function init(){
+    const studentRole=sessionStorage.getItem("student") || "hscp";
+    const navItems = document.querySelectorAll(".nav-item.top-level");
+    // Iterate through each top-level item
+    navItems.forEach(function (item) {
+        // Check if the item contains "HSCP 1" link
+        const link = item.querySelector("a");
+        if (link && link.textContent.trim() === "HSCP 1" || link.textContent.trim() === "Login") {
+            // Show this item
+            item.style.display = "block";
+        } else {
+            // Hide all other items
+            item.style.display = "none";
+        }
+    });
+}
+init();
 </script>
 </body>
 </html>

@@ -37,6 +37,7 @@ function validateAndSubmit() {
         .then(data => {
             console.log('Response:', data); // Handle the server response (success)
             sessionStorage.setItem('sessionToken', data.sessionToken);
+            sessionStorage.setItem('student', "hscp1");
             alert('Password changed successfully!');
             closeModal();
             window.location.href = "https://mperumal-usd.github.io/ita/"; 
