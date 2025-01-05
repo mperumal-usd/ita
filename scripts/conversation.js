@@ -121,6 +121,12 @@ if (!('webkitSpeechRecognition' in window)) {
         userInput.innerHTML="";
         transcription.innerHTML=""
         audioChunks=[]
+        if(mediaRecorder){
+            mediaRecorder.stop();
+        }
+        if(recognition){
+            recognition.stop();
+        }
         mediaRecorder.start();
         console.log('Audio recording started');
         recognition.start(); // Start the speech recognition
@@ -174,6 +180,7 @@ if (!('webkitSpeechRecognition' in window)) {
             } else {
                 interimTranscript += transcript;
             }
+            transcription.innerHTML = `${transcript}`;
         }
         transcription.innerHTML = `${finalTranscript}`;
         event.results=[]
