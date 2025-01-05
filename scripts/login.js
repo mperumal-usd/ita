@@ -37,9 +37,9 @@ function validateAndSubmit() {
         .then(data => {
             console.log('Response:', data); // Handle the server response (success)
             sessionStorage.setItem('sessionToken', data.sessionToken);
-            window.location.href = "https://mperumal-usd.github.io/ita/"; 
             alert('Password changed successfully!');
             closeModal();
+            window.location.href = "https://mperumal-usd.github.io/ita/"; 
         })
         .catch(error => {
             console.error('Error:', error); // Handle any errors (failed login, network issues)
@@ -91,10 +91,12 @@ form.addEventListener('submit', function(event) {
             })
             .then(data => {
                 console.log('Response:', data); // Handle the server response (success)
+                     sessionStorage.setItem('sessionToken', data.sessionToken);
                 if(data.isFirstLogin){
                     showModal();
+                }else {
+                    window.location.href = "https://mperumal-usd.github.io/ita/"; 
                 }
-                sessionStorage.setItem('sessionToken', data.sessionToken);
             })
             .catch(error => {
                 console.error('Error:', error); // Handle any errors (failed login, network issues)
