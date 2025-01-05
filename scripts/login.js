@@ -102,7 +102,6 @@ form.addEventListener('submit', function(event) {
                     showModal();
                 }
                 sessionStorage.setItem('sessionToken', data.sessionToken);
-                window.location.href = "https://mperumal-usd.github.io/ita/"; 
             })
             .catch(error => {
                 console.error('Error:', error); // Handle any errors (failed login, network issues)
