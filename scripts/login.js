@@ -1,11 +1,5 @@
-
-function changePassword(){
-    const loginForm = document.getElementById('login-form');
-    const changePasswordModal = document.getElementById('changePasswordModal');
-
-    // Simulate first login check
-
-    function validateAndSubmit() {
+let userNameLocal="";
+function validateAndSubmit() {
         const currentPassword= document.getElementById('currentPassword').value;
         const newPassword = document.getElementById('newPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
@@ -17,7 +11,7 @@ function changePassword(){
         }
         const username = document.getElementById('login-username').value;
         const data = {
-            userName: username,
+            userName: (username && username!=="") ?username:userNameLocal,
             password: currentPassword,
             newPassword: newPassword
         };
@@ -50,9 +44,8 @@ function changePassword(){
             console.error('Error:', error); // Handle any errors (failed login, network issues)
             alert('Error logging in. Please try again.');
         });
-   
-    }
 }
+
 
 function showModal() {
     document.getElementById('changePasswordModal').style.display = 'block';
@@ -72,7 +65,7 @@ form.addEventListener('submit', function(event) {
             // Get the form data
             const username = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
-
+            userNameLocal=username;
             // Prepare the data to send to the server
             const data = {
                 userName: username,
