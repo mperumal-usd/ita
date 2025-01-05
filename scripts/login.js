@@ -29,12 +29,51 @@ function changePassword(){
             errorMessage.textContent = "Passwords do not match!";
             return;
         }
+        const username = document.getElementById('login-username').value;
+        const data = {
+            userName: username,
+            password: newPassword
+        };
 
-        alert('Password changed successfully!');
-        changePasswordModal.style.display = 'none'; // Hide modal
+        // URL of the remote endpoint where you want to send the POST request
+        const url = 'https://infinite-sands-52519-06605f47cb30.herokuapp.com/changePassword'; // Replace with your actual endpoint
+
+        // Send the POST request using fetch
+        fetch(url, {
+            method: 'POST', // POST method
+            headers: {
+                'Content-Type': 'application/json' // Indicating the content type
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // Parse response if it's successful
+            }
+            throw new Error('Failed to login');
+        })
+        .then(data => {
+            console.log('Response:', data); // Handle the server response (success)
+            sessionStorage.setItem('sessionToken', data.sessionToken);
+            window.location.href = "https://mperumal-usd.github.io/ita/"; 
+            alert('Password changed successfully!');
+            closeModal();
+        })
+        .catch(error => {
+            console.error('Error:', error); // Handle any errors (failed login, network issues)
+            alert('Error logging in. Please try again.');
+        });
+   
     }
 }
 
+function showModal() {
+    document.getElementById('changePasswordModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('changePasswordModal').style.display = 'none';
+}
 
 function login(){
 
@@ -72,6 +111,9 @@ form.addEventListener('submit', function(event) {
             })
             .then(data => {
                 console.log('Response:', data); // Handle the server response (success)
+                if(data.isFirstLogin){
+                    showModal();
+                }
                 sessionStorage.setItem('sessionToken', data.sessionToken);
                 window.location.href = "https://mperumal-usd.github.io/ita/"; 
             })

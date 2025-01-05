@@ -17,7 +17,7 @@ order: 1
         <a href="#" class="login-forgot-password">Forgot your password?</a>
 </div>
 
-<div class="login-modal" id="changePasswordModal">
+<div class="login-modal" id="changePasswordModal" style="display: none;">
         <div class="login-modal-content">
             <h2>Change Your Password</h2>
             <form id="changePasswordForm">
