@@ -27,10 +27,10 @@ title: Conversation Home Work
     </div>
   </div>
 <button id="conversation-saveButton" disabled>Finish Conversation</button>
-<div id="progressContainer" style="display: none;">
+<!-- <div id="progressContainer" style="display: none;">
         <progress id="progressBar" value="0" max="100"></progress>
         <span id="progressText">0%</span>
-</div>
+</div> -->
 <script src="{{ site.baseurl }}/scripts/conversation.js"></script>
 <script>
 tracker();

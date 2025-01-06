@@ -9,8 +9,8 @@ const clearButton = document.getElementById("conversation-clear-btn");
 const startBtn = document.getElementById('conversation-start-btn');
 const sendBtn = document.getElementById('conversation-send-btn');
 const transcription = document.getElementById('userInput');
-const progressBar = document.getElementById('progressBar');
-const progressText = document.getElementById('progressText');
+// const progressBar = document.getElementById('progressBar');
+// const progressText = document.getElementById('progressText');
 
 
 async function getExercise() {
@@ -71,8 +71,8 @@ const uploadStream = new ReadableStream({
                 }
                 uploadedSize += value.length;
                 const percentComplete = Math.round((uploadedSize / totalSize) * 100);
-                progressBar.value = percentComplete;
-                progressText.textContent = `${percentComplete}%`;
+                // progressBar.value = percentComplete;
+                // progressText.textContent = `${percentComplete}%`;
                 controller.enqueue(value);
                 push();
             });
@@ -114,8 +114,8 @@ saveButton.addEventListener("click",async (event) => {
                 window.location.href = "https://mperumal-usd.github.io/ita/Login"; // Redirect to login page
                 return; // Stop further execution if 401 is encountered
             }else if (response.ok){
-            progressBar.value = 0;
-            progressText.textContent = '0%';
+            // progressBar.value = 0;
+            // progressText.textContent = '0%';
             }
             // If the status is OK or other success code, handle it
             return response.json();  // Parse the JSON response
@@ -129,7 +129,7 @@ saveButton.addEventListener("click",async (event) => {
             alert('Failed to save work.'+ JSON.stringify(error));
         })
         .finally( ()=>{
-            progressContainer.style.display = 'none';
+            // progressContainer.style.display = 'none';
         })
 });
 
