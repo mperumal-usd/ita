@@ -88,7 +88,7 @@ saveButton.addEventListener("click",async (event) => {
     const chatBox = document.getElementById("chatBox");
     saveButton.textContent='Uploading...';
     // Show progress bar
-    progressContainer.style.display = 'flex';
+    // progressContainer.style.display = 'flex';
     // Get all messages inside the chat box
     const messages = chatBox.querySelectorAll(".message");
     const formData = new FormData();
