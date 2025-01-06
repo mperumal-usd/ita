@@ -27,7 +27,7 @@ title: Conversation Home Work
     </div>
   </div>
 <button id="conversation-saveButton" disabled>Finish Conversation</button>
- <div class="conversation-spinner" id="spinner"></div>
+ <div class="conversation-spinner" id="conversation-spinner"></div>
 <!-- <div id="progressContainer" style="display: none;">
         <progress id="progressBar" value="0" max="100"></progress>
         <span id="progressText">0%</span>

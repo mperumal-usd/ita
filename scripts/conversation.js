@@ -98,7 +98,7 @@ saveButton.addEventListener("click",async (event) => {
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
     formData.append("content",JSON.stringify(messageArray));
     formData.append("work","conversation");
-    const spinner = document.getElementById('spinner');
+    const spinner = document.getElementById('conversation-spinner');
     spinner.style.display = "block";
     // console.log(messageArray);
     fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_form', {
