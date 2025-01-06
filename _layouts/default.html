@@ -102,13 +102,14 @@
     Prism.highlightAll();
   });
   function init(){
-    const studentRole=sessionStorage.getItem("student") || "hscp";
+    const allowedRoles=sessionStorage.getItem("allowedRoles") || [];
     const navItems = document.querySelectorAll(".nav-item.top-level");
+    
     // Iterate through each top-level item
     navItems.forEach(function (item) {
         // Check if the item contains "HSCP 1" link
         const link = item.querySelector("a");
-        if (link && link.textContent.trim() === "HSCP 1" || link.textContent.trim() === "Login") {
+        if (link && allowedRoles.includes(link.textContent.trim()) || link.textContent.trim() === "Login") {
             // Show this item
             item.style.display = "block";
         } else {
