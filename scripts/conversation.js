@@ -98,6 +98,8 @@ saveButton.addEventListener("click",async (event) => {
     const messageArray = Array.from(messages).map(message => message.textContent.trim());
     formData.append("content",JSON.stringify(messageArray));
     formData.append("work","conversation");
+    const spinner = document.getElementById('spinner');
+    spinner.style.display = "block";
     // console.log(messageArray);
     fetch('https://infinite-sands-52519-06605f47cb30.herokuapp.com/save_form', {
         method: 'POST',
@@ -114,8 +116,9 @@ saveButton.addEventListener("click",async (event) => {
                 window.location.href = "https://mperumal-usd.github.io/ita/Login"; // Redirect to login page
                 return; // Stop further execution if 401 is encountered
             }else if (response.ok){
-            // progressBar.value = 0;
-            // progressText.textContent = '0%';
+                spinner.style.display = "none";
+                // progressBar.value = 0;
+                // progressText.textContent = '0%';
             }
             // If the status is OK or other success code, handle it
             return response.json();  // Parse the JSON response
