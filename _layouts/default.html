@@ -107,7 +107,6 @@
     
     // Iterate through each top-level item
     navItems.forEach(function (item) {
-        // Check if the item contains "HSCP 1" link
         const link = item.querySelector("a");
         if (link && allowedRoles.includes(link.textContent.trim()) || link.textContent.trim() === "Login") {
             // Show this item

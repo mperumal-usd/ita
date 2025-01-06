@@ -92,10 +92,11 @@ form.addEventListener('submit', function(event) {
             })
             .then(data => {
                 console.log('Response:', data); // Handle the server response (success)
-                     sessionStorage.setItem('sessionToken', data.sessionToken);
+                sessionStorage.setItem('sessionToken', data.sessionToken);
                 if(data.isFirstLogin){
                     showModal();
                 }else {
+                    sessionStorage.setItem("allowedRoles",  data.roles || []);
                     window.location.href = "https://mperumal-usd.github.io/ita/"; 
                 }
             })
