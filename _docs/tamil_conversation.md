@@ -9,7 +9,8 @@ title: Conversation Home Work
  <label for="weeks">Choose a week:</label>
     <select id="weeks">
         <option value="1">16</option>
-         <option value="1">17</option>
+         <option value="">17</option>
+            <option value="2">5</option>
     </select>
 <button id="exercise-btn" onclick="getExercise()">start exercise</button>
 <div>
